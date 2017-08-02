@@ -17,33 +17,35 @@ namespace mySql
 	public:
 		/*
 		* Init MySQL
-		* @param hosts:         Host IP address
+		* @param hosts:           Host IP address
 		* @param userName:        Login UserName
 		* @param password:        Login Password
-		* @param dbName:        Database Name
-		* @param port:                Host listen port number
+		* @param dbName:          Database Name
+		* @param port:            Host listen port number
 		*/
 		MySQLManager(std::string hosts, std::string userName, std::string password, std::string dbName, unsigned int port);
 		~MySQLManager();
 		void initConnection();
 		/*
 		* Making query from database
-		* @param mysql:        MySQL Object
-		* @param sql:                Running SQL command
+		* @param sql:          Running SQL command
+		* @return:    Success of Fail
 		*/
 		bool runSQLQuery(std::string sql);
 		/*
-		* 执行插入语句
-		* @param sql: 执行的SQL语句
-		* @return: 受影响的行数
+		* Making insert from database
+		* @param sql: Running SQL command
+		* @return:    The number of rows affected
 		*/
 		unsigned int insert(std::string sql);
 		unsigned int insert1(std::string sql);
 		/**
 		* Destroy MySQL object
-		* @param mysql                MySQL object
 		*/
 		void destroyConnection();
+		/**
+		* Get MySQL connection status 
+		*/
 		bool getConnectionStatus();
 		vector< vector<string> > getResult();
 		MYSQL getMysql(){ return mySQLClient; }

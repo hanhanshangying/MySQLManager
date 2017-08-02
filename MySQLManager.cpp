@@ -4,11 +4,11 @@ using namespace mySql;
 MySQLManager::MySQLManager(string hosts, string userName, string password, string dbName, unsigned int port)
 {
 	IsConnected = false;
-	this->setHosts(hosts);            //    设置主机IP地址    
-	this->setUserName(userName);            //    设置登录用户名    
-	this->setPassword(password);            //    设置登录密码    
-	this->setDBName(dbName);            //    设置数据库名    
-	this->setPort(port);            //    设置端口号    
+	this->setHosts(hosts);             
+	this->setUserName(userName);           
+	this->setPassword(password);            
+	this->setDBName(dbName);            
+	this->setPort(port);            
 
 	//mysql_library_init(0, 0, 0);
 }
@@ -21,7 +21,7 @@ MySQLManager::~MySQLManager()
 void MySQLManager::setDBName(string dbName)
 {
 	if (dbName.empty())
-	{//        用户没有指定数据库名    
+	{
 		std::cout << "DBName is null! Used default value: mysql" << std::endl;
 		this->DBNAME = new char[5];
 		strcpy(this->DBNAME, "mysql");
@@ -36,7 +36,7 @@ void MySQLManager::setDBName(string dbName)
 void MySQLManager::setHosts(string hosts)
 {
 	if (hosts.empty())
-	{//    用户没有指定数据库IP地址    
+	{    
 		std::cout << "Hosts is null! Used default value: localhost" << std::endl;
 		this->HOSTS = new char[9];
 		strcpy(this->HOSTS, "localhost");
@@ -49,7 +49,7 @@ void MySQLManager::setHosts(string hosts)
 }
 
 void MySQLManager::setPassword(string password)
-{//    用户没有指定密码    
+{   
 	if (password.empty())
 	{
 		std::cout << "Password is null! Used default value: " << std::endl;
@@ -64,7 +64,7 @@ void MySQLManager::setPassword(string password)
 }
 
 void MySQLManager::setPort(unsigned int port)
-{//    用户没有指定端口号，使用默认端口号    
+{   
 	if (port <= 0)
 	{
 		std::cout << "Port number is null! Used default value: 0" << std::endl;
@@ -77,7 +77,7 @@ void MySQLManager::setPort(unsigned int port)
 }
 
 void MySQLManager::setUserName(string userName)
-{//    用户没有指定登录用户名    
+{  
 	if (userName.empty())
 	{
 		std::cout << "UserName is null! Used default value: root" << std::endl;
@@ -95,7 +95,7 @@ void MySQLManager::initConnection()
 {
 	//han changed
 	if (IsConnected)
-	{//    已经连接到服务器    
+	{    
 		std::cout << "Is connected to server!" << std::endl;
 		return;
 	}
@@ -106,31 +106,31 @@ void MySQLManager::initConnection()
 	//}
 	//else
 	{
-		MYSQL * con = mysql_init(&mySQLClient);//    初始化相关对象    
+		MYSQL * con = mysql_init(&mySQLClient);  
 		if (con == NULL)
 		{
 			cout << "-----------------------------" << endl;
-			std::cout << "初始化MYSQL对象失败。\n" << mysql_error(&mySQLClient) << std::endl;
+			std::cout << "init MYSQL object fail.\n" << mysql_error(&mySQLClient) << std::endl;
 		}
 		if (!mysql_real_connect(&mySQLClient, HOSTS, USERNAME, PASSWORD, DBNAME, DEFAULTPORT, NULL, 0))
-		{//    连接到服务器
+		{
 			cout << "-----------------------------" << endl;
 			std::cout << "Error connection to database: \n" << mysql_error(&mySQLClient) << std::endl;
 		}
-		IsConnected = true;//    修改连接标识    
+		IsConnected = true;    
 	}
 }
 
 bool MySQLManager::runSQLQuery(string sql)
 {
 	if (!IsConnected)
-	{//    没有连接到服务器    
+	{ 
 		std::cout << "Not connect to database!" << std::endl;
 		return false;
 	}
 	if (sql.empty())
-	{//    SQL语句为空    
-		std::cout << "SQL is null!" << std::endl;
+	{    
+		std::cout << "SQL statement is null!" << std::endl;
 		return false;
 	}
 
@@ -139,7 +139,7 @@ bool MySQLManager::runSQLQuery(string sql)
 
 	unsigned int i, j = 0;
 
-	i = mysql_real_query(&mySQLClient, sql.c_str(), (unsigned int)strlen(sql.c_str()));//    执行查询    
+	i = mysql_real_query(&mySQLClient, sql.c_str(), (unsigned int)strlen(sql.c_str()));   
 	if (i < 0)
 	{
 		std::cout << "Error query from database: \n" << mysql_error(&mySQLClient) << std::endl;
@@ -148,7 +148,7 @@ bool MySQLManager::runSQLQuery(string sql)
 	res = mysql_store_result(&mySQLClient);
 	vector<string> objectValue;
 	while ((row = mysql_fetch_row(res)))
-	{//    遍历结果集    
+	{    
 		objectValue.clear();
 		for (j = 0; j < mysql_num_fields(res); j++)
 		{
@@ -163,11 +163,13 @@ bool MySQLManager::runSQLQuery(string sql)
 
 unsigned int MySQLManager::insert(std::string sql)
 {
-	if (!IsConnected) {
+	if (!IsConnected) 
+	{
 		cout << "Not connect to database!" << endl;
 		return -1;
 	}
-	if (sql.empty()){
+	if (sql.empty())
+	{
 		cout << "sql is null " << endl;
 		return -1;
 	}
@@ -175,13 +177,14 @@ unsigned int MySQLManager::insert(std::string sql)
 	int res = mysql_query(&mySQLClient, sql.c_str());
 
 	cout << "PS:mysql_errno: " << mysql_errno(&mySQLClient) << "," << mysql_error(&mySQLClient) << endl;
-	if (res >= 0){
-		// 返回受影响的行数
+	if (res >= 0)
+	{
 		rows = mysql_affected_rows(&mySQLClient);
 		cout << "Inserted " << rows << " rows\n";
 		return rows;
 	}
-	else {
+	else 
+	{
 		cout << "Insert error " << mysql_errno(&mySQLClient) << "," << mysql_error(&mySQLClient) << endl;
 		return -1;
 	}
@@ -189,23 +192,26 @@ unsigned int MySQLManager::insert(std::string sql)
 
 unsigned int MySQLManager::insert1(std::string sql)
 {
-	if (!IsConnected) {
+	if (!IsConnected) 
+	{
 		cout << "Not connect to database!" << endl;
 		return -1;
 	}
-	if (sql.empty()){
+	if (sql.empty())
+	{
 		cout << "sql is null " << endl;
 		return -1;
 	}
 	int rows = -1;
-	int res = mysql_real_query(&mySQLClient, sql.c_str(), (unsigned int)strlen(sql.c_str()));//    执行查询 
-	if (res = 0){
-		// 返回受影响的行数
+	int res = mysql_real_query(&mySQLClient, sql.c_str(), (unsigned int)strlen(sql.c_str()));
+	if (res = 0)
+	{
 		rows = mysql_affected_rows(&mySQLClient);
 		cout << "Inserted " << rows << " rows\n";
 		return rows;
 	}
-	else {
+	else 
+	{
 		cout << "Insert error " << mysql_errno(&mySQLClient) << "," << mysql_error(&mySQLClient) << endl;
 		return -1;
 	}

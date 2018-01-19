@@ -1,2 +1,3 @@
 # MySQLManager
-packed by myself for MySQLManager 
+packed by hanshangying for MySQLManager 
+mySql for C++

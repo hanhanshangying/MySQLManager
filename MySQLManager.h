@@ -24,7 +24,7 @@ namespace mySql
 		* @param dbName:          Database Name
 		* @param port:            Host listen port number
 		*/
-		MySQLManager(std::string hosts, std::string userName, std::string password, std::string dbName, unsigned int port);
+		MySQLManagerstring hosts,string userName, string password, string dbName, unsigned int port);
 		~MySQLManager();
 		void initConnection();
 		/*
@@ -32,7 +32,7 @@ namespace mySql
 		* @param sql:          Running SQL command
 		* @return:    Success of Fail
 		*/
-		bool runSQLQuery(std::string sql);
+		bool runSQLQuery(string sql);
 		/*
 		* Making insert from database
 		* @param sql: Running SQL command
@@ -51,10 +51,10 @@ namespace mySql
 		vector< vector<string> > getResult();
 		MYSQL getMysql(){ return mySQLClient; }
 	protected:
-		void setUserName(std::string userName);
-		void setHosts(std::string hosts);
-		void setPassword(std::string password);
-		void setDBName(std::string dbName);
+		void setUserName(string userName);
+		void setHosts(string hosts);
+		void setPassword(string password);
+		void setDBName(string dbName);
 		void setPort(unsigned int port);
 		
 	private:
@@ -62,10 +62,10 @@ namespace mySql
 		vector< vector<string> > resultList;
 		MYSQL mySQLClient;
 		unsigned int DEFAULTPORT;
-		char * HOSTS;
-		char * USERNAME;
-		char * PASSWORD;
-		char * DBNAME;
+		string HOSTS;
+		string USERNAME;
+		string PASSWORD;
+		strung DBNAME;
 	};
 }
 #endif /* MYSQLMANAGER_H_ */

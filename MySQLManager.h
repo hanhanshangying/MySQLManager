@@ -24,7 +24,7 @@ namespace mySql
 		* @param dbName:          Database Name
 		* @param port:            Host listen port number
 		*/
-		MySQLManagerstring hosts,string userName, string password, string dbName, unsigned int port);
+		MySQLManager(const string &hosts, const string &userName, const string &password, const string &dbName, const unsigned int &port);
 		~MySQLManager();
 		void initConnection();
 		/*
@@ -32,14 +32,14 @@ namespace mySql
 		* @param sql:          Running SQL command
 		* @return:    Success of Fail
 		*/
-		bool runSQLQuery(string sql);
+		bool runSQLQuery(const string &sql);
 		/*
 		* Making insert from database
 		* @param sql: Running SQL command
 		* @return:    The number of rows affected
 		*/
-		unsigned int insert(std::string sql);
-		unsigned int insert1(std::string sql);
+		unsigned int insert(const string &sql);
+		unsigned int insert1(const string &sql);
 		/**
 		* Destroy MySQL object
 		*/
@@ -65,7 +65,7 @@ namespace mySql
 		string HOSTS;
 		string USERNAME;
 		string PASSWORD;
-		strung DBNAME;
+		string DBNAME;
 	};
 }
 #endif /* MYSQLMANAGER_H_ */

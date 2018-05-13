@@ -1,15 +1,19 @@
 #include "MySQLManager.h"    
 using namespace mySql;
 
-MySQLManager::MySQLManager(string hosts, string userName, string password, string dbName, unsigned int port)
+MySQLManager::MySQLManager(const string &hosts, const string &userName, const string &password, const string &dbName, const unsigned int &port)
 {
 	IsConnected = false;
-	this->setHosts(hosts);             
+	/*this->setHosts(hosts);             
 	this->setUserName(userName);           
 	this->setPassword(password);            
 	this->setDBName(dbName);            
 	this->setPort(port);            
-
+	*/
+	this->HOSTS = hosts;
+	this->USERNAME = userName;
+	this->PASSWORD = password;
+	this->DEFAULTPORT = port;
 	//mysql_library_init(0, 0, 0);
 }
 
@@ -121,7 +125,7 @@ void MySQLManager::initConnection()
 	}
 }
 
-bool MySQLManager::runSQLQuery(string sql)
+bool MySQLManager::runSQLQuery(const string &sql)
 {
 	if (!IsConnected)
 	{ 
@@ -161,7 +165,7 @@ bool MySQLManager::runSQLQuery(string sql)
 	return true;
 }
 
-unsigned int MySQLManager::insert(std::string sql)
+unsigned int MySQLManager::insert(const string &sql)
 {
 	if (!IsConnected) 
 	{
@@ -190,7 +194,7 @@ unsigned int MySQLManager::insert(std::string sql)
 	}
 }
 
-unsigned int MySQLManager::insert1(std::string sql)
+unsigned int MySQLManager::insert1(const string &sql)
 {
 	if (!IsConnected) 
 	{
